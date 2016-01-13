@@ -1,0 +1,92 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+CoEthDSL :
+   'CoEth Model' modelName=ID 
+   (entities+=Agent*)	
+  	'end'
+
+  ;
+ 
+Agent :
+ 'agent' name=ID  '{'
+ (features+=Feature)*
+ (operations+=Action)*
+ 'ecoModel' '{'
+  (decoNodes += ecoNode)+
+  'constraints' '{'
+  (constraints += ecoConstraint)+
+  '}'
+  '}'
+  '}'
+; 
+
+enum NodeType:
+	GOAL='goal' | BELIEF='belief' | EVIDENCE='evidence' | ACTION='action' 
+;
+  
+ecoNode :
+	('(' nType=NodeType name=ID  nDefinition=STRING ('initial activation' '=' activationLevel=DOUBLE)? ('priority' '=' priority=INT)? ')') |
+	('(' nType=NodeType name=ID 'is' myAction=[Action] bDefinition=STRING  ')')
+	
+;
+
+Action:
+	'action' name=ID '{'
+		('definition' aDefinition=STRING)
+
+	'}'
+;
+
+
+ecoConstraint : (Facilitate  | Trigger | Inhibit | Incompatible | Explain | Deduce | Contradict | Similar | Compete) ('with' '(' cooperativeUnits+=[ecoNode]+ ')')? 
+	;
+	
+Facilitate :
+	('facilitate' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)? )
+;
+
+Trigger :
+	('trigger' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?)  	
+;
+
+Inhibit :
+	 ('inhibit'source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?) 
+;
+
+Incompatible :
+	('incompatible'source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?)  
+	
+;
+
+Explain :
+	('explain' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?)
+
+;
+
+Deduce :
+	('deduce' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?  )
+
+;
+
+Contradict :
+	 ('contradict' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?) 
+
+;
+
+Similar :
+	 ('similar' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?) 
+
+;
+
+Compete :
+	 ('compete' source=[ecoNode] target=[ecoNode] (weight=DOUBLE)?) 
+;
+
+Feature:
+  name=ID  ':' type=ID
+	;
+
+
+terminal DOUBLE : INT '.' INT;

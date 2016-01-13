@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="myDsl" nsURI="http://www.xtext.org/example/mydsl/MyDsl" nsPrefix="myDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="CoEthDSL">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
+        eType="#//Agent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Agent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="decoNodes" upperBound="-1"
+        eType="#//ecoNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//ecoConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="NodeType">
+    <eLiterals name="GOAL" literal="goal"/>
+    <eLiterals name="BELIEF" value="1" literal="belief"/>
+    <eLiterals name="EVIDENCE" value="2" literal="evidence"/>
+    <eLiterals name="ACTION" value="3" literal="action"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ecoNode">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nType" eType="#//NodeType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activationLevel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="myAction" eType="#//Action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Action">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="aDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ecoConstraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cooperativeUnits" unique="false"
+        upperBound="-1" eType="#//ecoNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//ecoNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//ecoNode"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Facilitate" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Inhibit" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Incompatible" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Explain" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Deduce" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Contradict" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Similar" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Compete" eSuperTypes="#//ecoConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>
